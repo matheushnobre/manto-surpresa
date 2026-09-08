@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #0E2357;
+    --color-secondary: #CDEBFD;
+    --color-background: #FFFFFF;
+    --color-text: #1E1E1E;
+    --color-text-secondary: #6E7074;
+    --color-error: #980000;
+
+    --font-sans: var(--font-nunit);
+}
+
+html,
+body {
+    @apply bg-background text-text w-screen h-screen;
+}
