@@ -9,8 +9,6 @@
     --color-text: #1E1E1E;
     --color-text-secondary: #6E7074;
     --color-error: #980000;
-
-    --font-sans: var(--font-nunit);
 }
 
 html,
