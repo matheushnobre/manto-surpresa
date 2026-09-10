@@ -11,13 +11,13 @@ export default function Header() {
     return (
         <header className="bg-primary text-white">
             <div className="mx-auto flex h-16 items-center gap-8 px-4">
-                <Link href="/" className="font-bold text-xl transition hover:scale-105">
+                <Link href="/" className="font-bold text-xl transition hover:scale-105" aria-label="Manto Surpresa - página inicial">
                     <Image
                         src="/favicon.ico"
-                        alt="Manto Surpresa"
+                        alt=""
                         width={50}
                         height={50}
-                    ></Image>
+                    />
                 </Link>
 
                 {/* Desktop */}
@@ -38,7 +38,7 @@ export default function Header() {
                 <div className="ml-auto flex items-center gap-4 px-2">
                     <Link 
                         className="ml-auto flex items-center gap-2 rounded-md bg-secondary px-4 py-2 text-primary transition hover:opacity-90 hover:scale-105"
-                        href="cart"
+                        href="/cart"
                     >
                         <ShoppingCart className="h-5 w-5" />
                         Carrinho
@@ -48,7 +48,8 @@ export default function Header() {
                     <button
                         className="md:hidden text-2xl transition hover:text-secondary hover:scale-105"
                         onClick={() => setMenuOpen(!menuOpen)}
-                        aria-label="Abrir Menu"
+                        aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+                        aria-expanded={menuOpen}
                     >
                         ☰
                     </button>
@@ -59,7 +60,7 @@ export default function Header() {
             {menuOpen && (
                 <nav className="md:hidden p-4">
                     <div className="flex flex-col gap-4">
-                        <Link href="/" className="transtition hover:text-secondary">
+                        <Link href="/" className="transition hover:text-secondary">
                             Início
                         </Link>
 
