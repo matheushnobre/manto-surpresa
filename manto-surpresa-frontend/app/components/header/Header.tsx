@@ -23,7 +23,7 @@ export default function Header() {
                 {/* Desktop */}
                 <nav className="hidden md:flex gap-8">
                     <Link href="/boxes" className="transition hover:text-secondary hover:scale-105">
-                        Caixas Misteriosas
+                        Caixas misteriosas
                     </Link>
 
                     <Link href="/contact" className="transition hover:text-secondary hover:scale-105">
@@ -64,7 +64,7 @@ export default function Header() {
                         </Link>
 
                         <Link href="/boxes" className="transition hover:text-secondary">
-                            Caixas Misteriosas
+                            Caixas misteriosas
                         </Link>
 
                         <Link href="/contact" className="transition hover:text-secondary">
