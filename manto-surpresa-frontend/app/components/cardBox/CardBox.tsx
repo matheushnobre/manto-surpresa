@@ -15,7 +15,7 @@ export default function CardBox({
     price
 }: CardBoxProps) {
     return (
-        <article className="w-70 max-w-sm px-4 py-4 rounded-lg shadow-lg pb-6 transition hover:scale-102">
+        <article className="w-70 max-w-sm shrink-0 px-4 py-4 rounded-lg shadow-lg pb-6 transition hover:scale-102">
             <Link href="/box">
             
             <Image
@@ -25,9 +25,9 @@ export default function CardBox({
                 height={350}
                 className="w-full h-auto rounded-md"
             />
-            <h2 className="text-primary text-2xl font-bold mt-4">
+            <h3 className="text-primary text-2xl font-bold mt-4">
                 {name}
-            </h2>
+            </h3>
 
             <p className="text-justify mt-2 h-30 text-sm">
                 {description}

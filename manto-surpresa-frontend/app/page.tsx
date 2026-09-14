@@ -1,8 +1,9 @@
 import CardBox from "./components/cardBox/CardBox";
+import Image from "next/image";
 
 export default function PageHome() {  return (
     <main>
-        <div className="flex flex-wrap items-center justify-center gap-8 p-8">
+        <section className="min-h-[calc(100vh-4rem)] flex flex-wrap gap-8 justify-center px-8 py-8">
           <CardBox
               image="/boxes/box_classica.png"
               name="Box Clássica"
@@ -21,8 +22,24 @@ export default function PageHome() {  return (
               description="A Box Seleção é ideal para quem deseja adquirir uma camisa de uma seleção nova. Oportunidade perfeita para ter não somente uma nova camisa, mas conhecer, quem sabe, uma nova cultura ou país."
               price={179.90}
           />
-        </div>
-        
+        </section>
+
+        <section className="flex flex-col bg-secondary w-full py-8 px-4">
+            <div className="flex justify-center">
+                <h2 className="text-primary font-bold text-2xl">
+                    Manto Surpresa
+                </h2>
+            </div>
+
+            <div className="flex items-center justify-center p-4 gap-8">
+                <Image 
+                    src="/1.png"
+                    alt="Manto Surpresa Entregue"
+                    width={400}
+                    height={400}
+                />
+            </div>
+        </section>
     </main>
   );
 }
