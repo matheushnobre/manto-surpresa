@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 interface CardBoxProps {
+    id: number
     image: string
     name: string
     description: string
@@ -9,6 +10,7 @@ interface CardBoxProps {
 }
 
 export default function CardBox({
+    id,
     image, 
     name,
     description,
@@ -16,8 +18,8 @@ export default function CardBox({
 }: CardBoxProps) {
     return (
         <article className="w-70 max-w-sm shrink-0 px-4 py-4 rounded-lg shadow-lg pb-6 transition hover:scale-102">
-            <Link href="/box">
-            
+            <Link href={`/box/${id}`}>
+
             <Image
                 src={image}
                 alt={name}
