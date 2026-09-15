@@ -16,7 +16,7 @@ export async function getBoxById(id: number): Promise<Box> {
     const response = await fetch(`${API_URL}/box/${id}`, { next: {revalidate: 3600 }});
 
     if (!response.ok) {
-        throw new Error("Failed to fetch boxes");
+        throw new Error("Failed to fetch box");
     }
 
     return response.json();

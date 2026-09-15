@@ -8,6 +8,9 @@ interface PageProps {
     }>
 }
 
+export const dynamic = "force-dynamic";
+
+
 export default async function BoxPage({ params }: PageProps) {
     const { id } = await params
     const box = await getBoxById(id);
