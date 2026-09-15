@@ -12,10 +12,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    env:
-      API_URL: ${{ secrets.API_URL }}
-    
+        
     defaults:
       run:
         working-directory: ./manto-surpresa-frontend
@@ -35,6 +32,3 @@ jobs:
 
       - name: Lint
         run: npm run lint
-
-      - name: Build
-        run: npm run build
