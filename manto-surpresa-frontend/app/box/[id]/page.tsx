@@ -10,7 +10,6 @@ interface PageProps {
 
 export const dynamic = "force-dynamic";
 
-
 export default async function BoxPage({ params }: PageProps) {
     const { id } = await params
     const box = await getBoxById(id);
@@ -39,7 +38,7 @@ export default async function BoxPage({ params }: PageProps) {
                             {box.description}
                         </p>
                         
-                        <BoxForm price={box.price}/>
+                        <BoxForm id={box.id} name={box.name} price={box.price} image={box.image}/>
 
                     </div>
                 </section>
