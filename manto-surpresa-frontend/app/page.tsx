@@ -43,7 +43,7 @@ export default async function PageHome() {
           <div className="grid gap-8 md:grid-cols-3">
             <CardSteps
               step="01"
-              image="/assets/steps/step01.png"
+              image="/assets/steps/step_01.png"
               title="Escolha sua Box"
               description="Escolha a box que mais combina com você e prepare-se para uma experiência diferente."
               background_color="var(--color-secondary)"
@@ -51,7 +51,7 @@ export default async function PageHome() {
 
             <CardSteps
               step="02"
-              image="/assets/steps/step02.png"
+              image="/assets/steps/step_02.png"
               title="Finalize seu Pedido"
               description="Informe seu tamanho, finalize o pagamento e deixe a expectativa tomar conta."
               background_color="white"
@@ -59,7 +59,7 @@ export default async function PageHome() {
 
             <CardSteps
               step="03"
-              image="/assets/steps/step03.png"
+              image="/assets/steps/step_03.png"
               title="Seja Surpreendido"
               description="Agora é só esperar sua box chegar e descobrir qual manto está esperando por você."
               background_color="var(--color-secondary)"
@@ -68,7 +68,7 @@ export default async function PageHome() {
 
           <div className="mt-8 w-full flex items-center justify-center">
             <Link
-              className="bg-[#5CFF5C] font-bold text-md text-primary p-4 px-8 rounded-full animate-[pulse-scale_2s_ease-in-out_infinite] hover:scale-105 cursor-pointer"
+              className="bg-[#5CFF5C] font-bold text-md text-primary p-4 px-8 rounded-full animate-[pulse-scale_2s_ease-in-out_infinite] hover:scale-105 cursor-pointer border-2"
               href="boxes"
             >
               Quero ser Surpreendido!

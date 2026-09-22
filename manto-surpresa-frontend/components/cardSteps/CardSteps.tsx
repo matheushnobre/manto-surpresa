@@ -18,9 +18,9 @@ export default function CardSteps({
     return (
         <div 
             style={{backgroundColor: background_color}}
-            className={`group relative overflow-hidden rounded-2xl p-6 shadow-lg`}
+            className="group relative overflow-hidden rounded-2xl p-6 shadow-sm border-2"
         >
-            <span className="text-6xl font-black text-primary/10">
+            <span className="text-4xl font-black text-primary">
                 {step}
             </span>
 
