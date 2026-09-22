@@ -1,5 +1,5 @@
 import { userCartStore } from "@/stores/userCartStore";
-import { CartItem } from "@/types/CartItem";
+import { CartItem } from "@/types/cartItem";
 import CartItemComponent from "./CartItemComponent";
 
 interface CartComponentProps {

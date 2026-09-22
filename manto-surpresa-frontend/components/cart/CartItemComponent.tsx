@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Trash } from "lucide-react";
 import { userCartStore } from "@/stores/userCartStore";
-import { CartItem } from "@/types/CartItem";
+import { CartItem } from "@/types/cartItem";
 
 interface CartItemComponentProps {
   item: CartItem;
