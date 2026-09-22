@@ -9,9 +9,22 @@
     --color-text: #1E1E1E;
     --color-text-secondary: #6E7074;
     --color-error: #980000;
+
+    --animate-pulse-scale: pulse-scale 2s ease-in-out infinite;
+
+    @keyframes pulse-scale {
+        0%, 100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+    }
 }
 
 html,
 body {
     @apply bg-background text-text w-screen h-screen;
 }
+
