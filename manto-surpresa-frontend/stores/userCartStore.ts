@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { CartItem } from "@/models/CartItem";
+import { CartItem } from "@/types/CartItem";
 
 interface CartStore {
   items: CartItem[];
@@ -14,18 +14,18 @@ export const userCartStore = create<CartStore>()(
     (set) => ({
       items: [],
 
-      addItem: (item) => 
+      addItem: (item) =>
         set((state) => {
           const exists = state.items.some(
-            (i) => i.id === item.id && i.size === item.size
+            (i) => i.id === item.id && i.size === item.size,
           );
 
           if (exists) {
             return {
-              items: state.items.map((i) => 
+              items: state.items.map((i) =>
                 i.id === item.id && i.size === item.size
-                ? {...i, quantity: i.quantity + item.quantity}
-                : i
+                  ? { ...i, quantity: i.quantity + item.quantity }
+                  : i,
               ),
             };
           }
@@ -37,24 +37,25 @@ export const userCartStore = create<CartStore>()(
 
       changeQuantity: (item, value) =>
         set((state) => ({
-            items: state.items
-                .map((i) =>
-                    i.id === item.id && i.size === item.size
-                        ? { ...i, quantity: i.quantity + value }
-                        : i
-                )
-                .filter((i) => i.quantity > 0),
+          items: state.items
+            .map((i) =>
+              i.id === item.id && i.size === item.size
+                ? { ...i, quantity: i.quantity + value }
+                : i,
+            )
+            .filter((i) => i.quantity > 0),
         })),
 
       removeItem: (item) =>
         set((state) => ({
-          items: state.items.filter((x) => x.id !== item.id || x.size !== item.size),
+          items: state.items.filter(
+            (x) => x.id !== item.id || x.size !== item.size,
+          ),
         })),
-
     }),
-    
+
     {
       name: "cart-storage",
-    }
-  )
+    },
+  ),
 );

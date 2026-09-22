@@ -96,7 +96,10 @@ export default function Header() {
                 Entre em contato
               </Link>
 
-              <Link href="/tracking" className="transition hover:text-secondary">
+              <Link
+                href="/tracking"
+                className="transition hover:text-secondary"
+              >
                 Rastreie seu pedido
               </Link>
             </div>
@@ -104,10 +107,7 @@ export default function Header() {
         )}
       </header>
 
-      <CartComponent 
-        open={cartOpen}
-        onClose={() => setCartOpen(false)}
-      />
+      <CartComponent open={cartOpen} onClose={() => setCartOpen(false)} />
     </>
   );
 }
