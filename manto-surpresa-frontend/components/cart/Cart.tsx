@@ -57,7 +57,7 @@ export default function CartComponent({ open, onClose }: CartComponentProps) {
             </p>
           </div>
 
-          <button className="bg-primary w-full text-white px-2 py-4 rounded-md cursor-pointer hover:opacity-90">
+          <button className="bg-primary w-full text-white px-2 py-4 rounded-full cursor-pointer hover:opacity-90">
             Finalizar Compra
           </button>
         </div>

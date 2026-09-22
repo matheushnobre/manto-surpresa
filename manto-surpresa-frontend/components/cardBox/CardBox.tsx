@@ -17,25 +17,28 @@ export default function CardBox({
     price
 }: CardBoxProps) {
     return (
-        <article className="w-70 max-w-sm shrink-0 px-4 py-4 rounded-lg shadow-lg pb-6 transition hover:scale-102">
+        <article className="w-[80%] max-w-xs shrink-0 px-8 md:px-4 py-4 rounded-lg shadow-lg pb-6 transition hover:scale-102">
             <Link href={`/box/${id}`}>
 
-            <Image
-                src={image}
-                alt={name}
-                width={350}
-                height={350}
-                className="w-full h-auto rounded-md"
-            />
-            <h3 className="text-primary text-2xl font-bold mt-4">
+            <div className="w-full flex items-center justify-center mt-2">
+                <Image
+                    src={image}
+                    alt={name}
+                    width={300}
+                    height={300}
+                    className="w-[80%] h-auto rounded-md"
+                />
+            </div>
+            
+            <h3 className="text-primary text-lg md:text-lg font-bold mt-4">
                 {name}
             </h3>
 
-            <p className="text-justify mt-2 h-30 text-sm">
+            <p className="text-justify mt-2 text-sm md:text-md">
                 {description}
             </p>
 
-            <div className="flex flex-col items-end gap-1">
+            <div className="flex flex-col items-end gap-1 mt-4">
                 <p className="items-end text-text-secondary text-sm">
                     R$ 
                     <span className="ml-1 text-primary text-bold text-lg">
@@ -45,7 +48,7 @@ export default function CardBox({
                         })}
                     </span>
                 </p>
-                <button className="bg-primary rounded-md text-white text-sm p-3 transition hover:scale-105">
+                <button className="bg-[#5CFF5C] rounded-full border-1 text-primary text-sm py-2 px-4 transition hover:scale-105 cursor-pointer">
                     Comprar agora
                 </button>
             </div>
