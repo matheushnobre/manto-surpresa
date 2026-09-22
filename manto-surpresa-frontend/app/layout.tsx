@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
-import { Nunito } from "next/font/google";
+import { Geist } from "next/font/google";
+import { Fredoka } from "next/font/google";
 import "./globals.css";
 import Header from "../components/header/Header";
+import { cn } from "@/lib/utils";
 
-const nunito = Nunito({
-  variable: "--font-nunito",
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+
+const fredoka = Fredoka({
   subsets: ["latin"],
+  variable: "--font-fredoka",
 });
 
 export const metadata: Metadata = {
@@ -16,8 +20,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-Br">
-      <body className={nunito.className}>
+    <html lang="pt-Br" className={cn("font-sans", geist.variable)}>
+      <body className={fredoka.className}>
         <Header />
         {children}
       </body>

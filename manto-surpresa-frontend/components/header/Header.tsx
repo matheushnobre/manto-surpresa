@@ -52,7 +52,7 @@ export default function Header() {
 
           <div className="ml-auto flex items-center gap-4 px-2">
             <button
-              className="ml-auto flex items-center gap-2 rounded-md bg-secondary px-4 py-2 text-primary transition hover:opacity-90 hover:scale-105 cursor-pointer"
+              className="flex items-center gap-2 rounded-md bg-secondary px-4 py-2 text-primary transition hover:opacity-90 hover:scale-105 cursor-pointer"
               onClick={() => setCartOpen(!cartOpen)}
             >
               <div className="relative">
