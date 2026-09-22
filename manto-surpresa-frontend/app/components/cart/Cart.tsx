@@ -56,7 +56,7 @@ export default function CartComponent({
                     ))}
                 </div>
 
-                <div className="px-6 pb-6 mt-auto mb-4 border-t border-gray-300">
+                <div className="px-6 mt-auto pb-4 border-t border-gray-300 md:pb-8">
                     <div className="flex items-baseline justify-between py-4">
                         <h2 className="text-text text-lg font-bold">Subtotal</h2>
                         <p>
