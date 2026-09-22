@@ -4,6 +4,7 @@ import { Box } from "../types/box";
 import CardSteps from "../components/cardSteps/CardSteps";
 import Link from "next/link";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Button } from "@/components/ui/button";
 
 export const dynamic = "force-dynamic";
 
@@ -14,7 +15,7 @@ export default async function PageHome() {
     <main className="min-w-0">
       
       <div className="flex w-full md:min-h-[calc(100vh-4rem)]">
-        <div className="relative hidden md:block md:w-[50%] lg:w-[70%] ">
+        <div className="relative hidden lg:block lg:w-[70%] ">
           <video
             autoPlay
             muted
@@ -35,9 +36,9 @@ export default async function PageHome() {
                     
         </div>
 
-        <div className="w-full md:w-[50%] lg:w-[30%] flex items-center justify-center">
+        <div className="w-full lg:w-[30%] flex items-center justify-center mt-1">
           <Carousel className="relative w-full">
-            <CarouselContent>
+            <CarouselContent className="pb-10">
               {boxes.map((box: Box) => (
                 <CarouselItem key={box.id} className="flex items-center justify-center mt-4">
                   <CardBox
@@ -50,9 +51,9 @@ export default async function PageHome() {
                 </CarouselItem>
               ))}
               </CarouselContent>
-            <div className="flex justify-center gap-4 mt-4 mb-4">
-              <CarouselPrevious className="static translate-y-0" />
-              <CarouselNext className="static translate-y-0" />
+            <div className="flex justify-center gap-4 mb-4">
+              <CarouselPrevious className="static translate-y-0 size-8 rounded-lg border-4 border-primary bg-secondary text-primary shadow-[4px_4px_0px_#0E2357] transition-all hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none" />              
+              <CarouselNext className="static translate-y-0 size-8 rounded-lg border-4 border-primary bg-secondary text-primary shadow-[4px_4px_0px_#0E2357] transition-all hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none" />              
             </div>
           </Carousel>
 
@@ -102,12 +103,11 @@ export default async function PageHome() {
           </div>
 
           <div className="mt-8 w-full flex items-center justify-center">
-            <Link
-              className="bg-[#5CFF5C] text-md text-primary p-4 px-8 rounded-full animate-[pulse-scale_2s_ease-in-out_infinite] hover:scale-105 cursor-pointer border-2"
-              href="boxes"
+            <Button
+              className="bg-[#5CFF5C] px-8 py-6 text-md"
             >
               Quero ser Surpreendido!
-            </Link>
+            </Button>
           </div>
         </div>
       </section>

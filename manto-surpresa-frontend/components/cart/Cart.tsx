@@ -1,6 +1,7 @@
 import { userCartStore } from "@/stores/userCartStore";
 import { CartItem } from "@/types/cartItem";
 import CartItemComponent from "./CartItemComponent";
+import { Button } from "@/components/ui/button"
 
 interface CartComponentProps {
   open: boolean;
@@ -48,7 +49,7 @@ export default function CartComponent({ open, onClose }: CartComponentProps) {
 
         <div className="px-6 mt-auto pb-8 border-t border-gray-300">
           <div className="flex items-baseline justify-between py-4">
-            <h2 className="text-text text-lg font-bold">Subtotal</h2>
+            <h2 className="text-gray-500 text-md">Subtotal</h2>
             <p>
               R${" "}
               <span className="text-2xl font-bold text-primary">
@@ -57,9 +58,9 @@ export default function CartComponent({ open, onClose }: CartComponentProps) {
             </p>
           </div>
 
-          <button className="bg-primary w-full text-white px-2 py-4 rounded-full cursor-pointer hover:opacity-90">
+          <Button className="w-full py-5">
             Finalizar Compra
-          </button>
+          </Button>
         </div>
       </section>
     </>

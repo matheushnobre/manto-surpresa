@@ -1,5 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
 interface CardBoxProps {
     id: number
@@ -17,7 +18,7 @@ export default function CardBox({
     price
 }: CardBoxProps) {
     return (
-        <article className="w-[80%] max-w-xs shrink-0 px-8 md:px-4 py-4 rounded-lg shadow-lg pb-6 transition hover:scale-102">
+        <article className="w-[80%] max-w-xs px-8 md:px-4 py-4 pb-6 border-4 border-primary shadow-[7px_7px_0px_#0E2357] transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_#0E2357] rounded-lg">
             <Link href={`/box/${id}`}>
 
             <div className="w-full flex items-center justify-center mt-2">
@@ -26,7 +27,7 @@ export default function CardBox({
                     alt={name}
                     width={300}
                     height={300}
-                    className="w-[80%] h-auto rounded-md"
+                    className="w-[80%] h-auto rounded-lg aspect-square"
                 />
             </div>
             
@@ -38,7 +39,7 @@ export default function CardBox({
                 {description}
             </p>
 
-            <div className="flex flex-col items-end gap-1 mt-4">
+            <div className="flex flex-col items-end gap-1 mt-2">
                 <p className="items-end text-text-secondary text-sm">
                     R$ 
                     <span className="ml-1 text-primary text-bold text-lg">
@@ -48,9 +49,9 @@ export default function CardBox({
                         })}
                     </span>
                 </p>
-                <button className="bg-[#5CFF5C] rounded-full border-1 text-primary text-sm py-2 px-4 transition hover:scale-105 cursor-pointer">
+                <Button className="bg-[#5CFF5C] px-5 py-4 shadow-[5px_5px_0px_#0E2357]">
                     Comprar agora
-                </button>
+                </Button>
             </div>
             </Link>
         </article>
