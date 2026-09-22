@@ -2,7 +2,6 @@ import CardBox from "../components/cardBox/CardBox";
 import { getBoxes } from "../services/boxService";
 import { Box } from "../types/box";
 import CardSteps from "../components/cardSteps/CardSteps";
-import Link from "next/link";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 
