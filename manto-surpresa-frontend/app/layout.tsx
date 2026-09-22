@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
-import { Nunito, Geist } from "next/font/google";
+import { Geist } from "next/font/google";
 import { Fredoka } from "next/font/google";
 import "./globals.css";
 import Header from "../components/header/Header";
 import { cn } from "@/lib/utils";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
-
-const nunito = Nunito({
-  variable: "--font-nunito",
-  subsets: ["latin"],
-});
 
 const fredoka = Fredoka({
   subsets: ["latin"],
