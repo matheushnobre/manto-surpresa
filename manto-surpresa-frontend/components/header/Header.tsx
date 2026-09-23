@@ -6,6 +6,7 @@ import { ShoppingCart } from "lucide-react";
 import { userCartStore } from "@/stores/userCartStore";
 import CartComponent from "../cart/Cart";
 import Image from "next/image";
+import { Button } from "@/components/ui/button"
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -30,47 +31,47 @@ export default function Header() {
           <nav className="hidden md:flex gap-8">
             <Link
               href="/boxes"
-              className="transition hover:text-secondary hover:scale-105"
+              className="text-white px-2 py-1 text-primary transition-all hover:-translate-y-[-2px] active:translate-x-[-2px] active:translate-y-[2px] active:shadow-none hover:text-secondary"
             >
               Caixas misteriosas
             </Link>
 
             <Link
               href="/contact"
-              className="transition hover:text-secondary hover:scale-105"
+              className="text-white px-2 py-1 text-primary transition-all hover:-translate-y-[-2px] active:translate-x-[-2px] active:translate-y-[2px] active:shadow-none hover:text-secondary"
             >
               Entre em contato
             </Link>
 
             <Link
               href="/tracking"
-              className="transition hover:text-secondary hover:scale-105"
+              className="text-white px-2 py-1 text-primary transition-all hover:-translate-y-[-2px] active:translate-x-[-2px] active:translate-y-[2px] active:shadow-none hover:text-secondary"
             >
               Rastreie seu pedido
             </Link>
           </nav>
 
           <div className="ml-auto flex items-center gap-4 px-2">
-            <button
-              className="flex items-center gap-2 rounded-md bg-secondary px-4 py-2 text-primary transition hover:opacity-90 hover:scale-105 cursor-pointer"
+            <Button
+              className="flex items-center gap-1 px-4 h-[80%] cursor-pointer text-md"
               onClick={() => setCartOpen(!cartOpen)}
             >
               <div className="relative">
-                <ShoppingCart className="h-5 w-5" />
+                <ShoppingCart className="size-4" />
 
                 {totalItems > 0 && (
-                  <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-xs font-bold text-white">
-                    {totalItems > 99 ? "99+" : totalItems}
+                  <span className="absolute -right-3 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-xs text-white">
+                    {totalItems >= 10 ? "10+" : totalItems}
                   </span>
                 )}
               </div>
 
               <p className="hidden md:block ml-2">Carrinho</p>
-            </button>
+            </Button>
 
             {/* Mobile */}
             <button
-              className="md:hidden text-3xl transition hover:text-secondary hover:scale-105 cursor-pointer"
+              className="md:hidden text-2xl transition cursor-pointer hover:translate-x-[2px] hover:translate-y-[2px]"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
               aria-expanded={menuOpen}
@@ -84,21 +85,21 @@ export default function Header() {
         {menuOpen && (
           <nav className="md:hidden p-4">
             <div className="flex flex-col gap-4">
-              <Link href="/" className="transition hover:text-secondary">
+              <Link href="/" className="text-white px-2 text-primary transition-all hover:-translate-y-[-2px] active:translate-x-[-2px] active:translate-y-[2px] active:shadow-none hover:text-secondary">
                 Início
               </Link>
 
-              <Link href="/boxes" className="transition hover:text-secondary">
+              <Link href="/boxes" className="text-white px-2 text-primary transition-all hover:-translate-y-[-2px] active:translate-x-[-2px] active:translate-y-[2px] active:shadow-none hover:text-secondary">
                 Caixas misteriosas
               </Link>
 
-              <Link href="/contact" className="transition hover:text-secondary">
+              <Link href="/contact" className="text-white px-2 text-primary transition-all hover:-translate-y-[-2px] active:translate-x-[-2px] active:translate-y-[2px] active:shadow-none hover:text-secondary">
                 Entre em contato
               </Link>
 
               <Link
                 href="/tracking"
-                className="transition hover:text-secondary"
+                className="text-white px-2 text-primary transition-all hover:-translate-y-[-2px] active:translate-x-[-2px] active:translate-y-[2px] active:shadow-none hover:text-secondary"
               >
                 Rastreie seu pedido
               </Link>
