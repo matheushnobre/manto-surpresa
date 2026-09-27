@@ -26,7 +26,7 @@ export default async function BoxPage({ params }: PageProps) {
               alt={box.name}
               width={350}
               height={350}
-              className="rounded-md"
+              className="rounded-lg"
             />
           </div>
 

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { userCartStore } from "@/stores/userCartStore";
+import { Button } from "@/components/ui/button";
 
 interface BoxFormProps {
   id: number;
@@ -72,17 +73,17 @@ export default function BoxForm({ id, name, price, image }: BoxFormProps) {
         </select>
       </div>
 
-      <p className="mt-2 text-2xl font-bold">
-        R$ {(price * quantity).toFixed(2)}
+      <p className="mt-2 text-2xl font-bold text-primary">
+        R$ {(price * quantity).toFixed(2).replace(".", ",")}
       </p>
 
-      <button
+      <Button
         type="submit"
-        className="cursor-pointer rounded-md bg-primary px-6 py-3 text-white transition hover:scale-105"
+        className="cursor-pointer py-6 text-md"
         onClick={handleAddToCart}
       >
         Adicionar ao Carrinho
-      </button>
+      </Button>
     </form>
   );
 }
