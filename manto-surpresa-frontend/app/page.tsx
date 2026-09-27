@@ -24,14 +24,6 @@ export default async function PageHome() {
           >
             <source src="/assets/cartoon_welcome.mp4" type="video/mp4"></source>
           </video>
-
-          <div className="absolute top-10 w-full px-4">
-            <div className="relative ml-auto mr-8 w-fit max-w-full rounded-2xl border-4 border-primary bg-secondary px-8 py-4 text-center">
-              <h3 className="text-md lg:text-lg font-bold tracking-wide text-primary">
-                Viva a emoção, vista a surpresa!
-              </h3>
-            </div>
-          </div>
                     
         </div>
 
