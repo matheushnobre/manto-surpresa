@@ -2,6 +2,7 @@ import { userCartStore } from "@/stores/userCartStore";
 import { CartItem } from "@/types/cartItem";
 import CartItemComponent from "./CartItemComponent";
 import { Button } from "@/components/ui/button"
+import Link from "next/link";
 
 interface CartComponentProps {
   open: boolean;
@@ -58,9 +59,14 @@ export default function CartComponent({ open, onClose }: CartComponentProps) {
             </p>
           </div>
 
-          <Button className="w-full py-5">
-            Finalizar Compra
-          </Button>
+          <Link
+            href="/checkout"
+            >
+            <Button className="w-full py-5" onClick={onClose}>
+              Finalizar Compra
+            </Button>
+          </Link>
+
         </div>
       </section>
     </>
