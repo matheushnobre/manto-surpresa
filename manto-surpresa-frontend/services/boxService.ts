@@ -1,6 +1,6 @@
 import { Box } from "../types/box";
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function getBoxes(): Promise<Box[]> {
   const response = await fetch(`${API_URL}/box`, {

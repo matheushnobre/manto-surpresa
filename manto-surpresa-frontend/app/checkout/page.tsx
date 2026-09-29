@@ -4,8 +4,12 @@ import FormCheckout from "./formCheckout";
 import CartItemComponent from "@/components/cart/CartItemComponent";
 import { userCartStore } from "@/stores/userCartStore";
 import { CartItem } from "@/types/cartItem";
+import { useState } from "react";
+import PaymentPix from "./paymentPix";
 
 export default function Checkout() {
+    const [paymentQrCode, setPaymentQrCode] = useState("");
+    
     const items = userCartStore((state) => state.items);
     const totalPrice = items.reduce(
         (total, item) => total + item.quantity * item.price,
@@ -14,8 +18,19 @@ export default function Checkout() {
 
     return (
         <main className="flex flex-wrap mt-4">
-            <FormCheckout/>
+           <div className="w-full lg:w-[70%] px-8 py-4 pb-8 lg:pl-16 lg:pr-0 flex flex-col gap-6">
+                <FormCheckout 
+                    paymentQrCode={paymentQrCode}
+                    setPaymentQrCode={setPaymentQrCode}
+                />
 
+                {paymentQrCode && (
+                    <PaymentPix
+                        qrCodeBase64={paymentQrCode}
+                    />
+                )}
+            </div>
+            
             <div className="hidden lg:flex w-full lg:w-[30%] px-8 py-4 lg:px-16 flex-col">                
                 <h2 className="text-primary font-bold text-2xl mb-4">Seu Pedido</h2>
                 <div className="flex flex-col gap-3">

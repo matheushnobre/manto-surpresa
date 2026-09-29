@@ -8,8 +8,19 @@ import { getAdress } from "@/services/viacepService";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckoutFormSchema, checkoutFormSchema } from "../utils/zodSchema";
+import { createOrder } from "@/services/checkoutService";
+import { userCartStore } from "@/stores/userCartStore";
 
-export default function FormCheckout() {  
+interface FormCheckoutProps {
+    paymentQrCode: string;
+    setPaymentQrCode: (qrCode: string) => void;
+}
+
+export default function FormCheckout({
+    paymentQrCode,
+    setPaymentQrCode
+}: FormCheckoutProps) {  
+    const { items } = userCartStore();    
     const [addressLoaded, setAddressLoaded] = useState(false);
 
     const {
@@ -33,8 +44,36 @@ export default function FormCheckout() {
         }
     });
 
-    function onSubmit(payload: CheckoutFormSchema) {
-        console.log('submit', payload)
+    async function onSubmit(payload: CheckoutFormSchema) {
+        if (items.length === 0) return;
+
+        try {
+            const response = await createOrder({
+                client: {
+                    name: payload.name,
+                    email: payload.email,
+                    telephone: payload.telephone,
+                },
+                address: {
+                    cep: payload.cep,
+                    road: payload.road,
+                    number: payload.number,
+                    complement: payload.complement,
+                    neighborhood: payload.neighborhood,
+                    city: payload.city,
+                    state: payload.state,
+                },
+                items: items.map((item) => ({
+                    box_id: item.id,
+                    quantity: item.quantity,
+                    size: item.size,
+                })),
+            })
+
+            setPaymentQrCode(response.pix.qr_code_base64);
+        } catch (error) {
+            console.log("Erro ao criar pedido", error);
+        }
     }
 
     async function handleCepChange(
@@ -42,12 +81,10 @@ export default function FormCheckout() {
     ) {
         const value = event.target.value;
 
-        // Mantém o CEP dentro do React Hook Form
         setValue("cep", value, {shouldValidate: true});
 
         const cleanCep = value.replace(/\D/g, "");
 
-        // Ainda não temos um CEP completo
         if (cleanCep.length !== 8) {
             setAddressLoaded(false);
             return;
@@ -70,9 +107,9 @@ export default function FormCheckout() {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full lg:w-[70%] px-8 py-4 lg:pl-16 lg:pr-0 flex flex-col gap-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
             {/* Seção de contato */}
-            <fieldset className="border-2 border-primary/30 px-5 pb-6 pt-4 rounded-lg">
+            <fieldset className="border-2 border-primary/30 px-5 pb-6 pt-4 rounded-lg" disabled={paymentQrCode !== ""}>
                 <legend className="px-3 text-2xl font-bold text-primary">
                     Contato
                 </legend>
@@ -105,14 +142,13 @@ export default function FormCheckout() {
             </fieldset>
 
             {/* Seção de endereço de entrega */}
-            <fieldset className="border-2 border-primary/30 px-5 pb-6 pt-4 rounded-lg">
+            <fieldset className="border-2 border-primary/30 px-5 pb-6 pt-4 rounded-lg" disabled={paymentQrCode !== ""}>
                 <legend className="px-3 text-2xl font-bold text-primary">
                     Dados de Entrega
                 </legend>
 
                 <div className="flex flex-col gap-5">
 
-                    {/* CEP */}
                     <Field>
                         <FieldLabel htmlFor="fieldgroup-cep" className="text-primary">CEP</FieldLabel>
                         <Input id="fieldgroup-cep" placeholder="99999-000" {...register("cep")} onChange={handleCepChange} aria-invalid={!!errors.cep}/>
@@ -121,7 +157,6 @@ export default function FormCheckout() {
                         )}
                     </Field>
 
-                    {/* Campos exibidos após o CEP */}
                     {addressLoaded && (
                         <>
                             <Field>
@@ -176,10 +211,15 @@ export default function FormCheckout() {
                     )}
                 </div>
             </fieldset>
-
-            <Button type="submit" className="w-full py-5 text-md mb-4">
-                Continuar para Pagamento
-            </Button>
+            
+            {paymentQrCode === "" && (
+                <div className="flex justify-center">
+                    <Button type="submit" className="w-full md:w-[50%] py-5 text-md">
+                        Gerar PIX para Pagamento
+                    </Button>
+                </div>
+            )}
+            
         </form>
     )
 }
