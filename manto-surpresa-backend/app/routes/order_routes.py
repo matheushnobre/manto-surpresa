@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException, status, Form
+from fastapi import APIRouter, HTTPException, status
+from fastapi.encoders import jsonable_encoder
 from models import Order, Client, Address, OrderItem, Box
 from sqlalchemy.orm import Session
 from fastapi import Depends
@@ -6,6 +7,7 @@ from fastapi.responses import JSONResponse
 from dependencies import get_session
 from schemas import OrderSchema
 from datetime import date
+from services.mercado_pago import create_pix_order
 
 order_routes = APIRouter(prefix='/order', tags=['order'])
 
@@ -87,9 +89,28 @@ async def create_order(order_data: OrderSchema, session: Session = Depends(get_s
     # 5. Calculate order price
     new_order.calcular_preco()
 
-    # 6. Save everything
+    # 6. Create pix order on MercadoPago
+    pix = create_pix_order(new_order)
+    payment = pix["transactions"]["payments"][0]
+
+    # 7. Save Mercado Pago data in order
+    new_order.mercado_pago_order_id = pix["id"]
+    new_order.mercado_pago_payment_id = payment["id"]
+    
     session.commit()
-    session.refresh(new_order)
 
-    return new_order
-
+    return JSONResponse(
+        status_code=status.HTTP_201_CREATED,
+        content=jsonable_encoder({
+            "id": new_order.id,
+            "date": new_order.date,
+            "subtotal": new_order.subtotal,
+            "status": new_order.status,
+            "pix": {
+                "qr_code": payment["payment_method"]["qr_code"],
+                "qr_code_base64": payment["payment_method"]["qr_code_base64"],
+                "ticket_url": payment["payment_method"]["ticket_url"],
+            },
+            "message": "Order created successfully"
+        })
+    )

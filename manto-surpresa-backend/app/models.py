@@ -72,6 +72,8 @@ class Order(Base):
     subtotal = Column("subtotal", Numeric(10, 2), nullable=False, default=0)
     address_id = Column("address_id", Integer, ForeignKey("address.id"), nullable=False)
     client_id = Column("client_id", Integer, ForeignKey("clients.id"), nullable=False)
+    mercado_pago_order_id = Column("mercado_pago_order_id", String)
+    mercado_pago_payment_id = Column("mercado_pago_payment_id", String)
 
     client = relationship("Client", back_populates="orders")
     address = relationship("Address", back_populates="orders")
