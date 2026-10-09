@@ -1,9 +1,9 @@
 from fastapi import APIRouter, status, Form
-from models import Box
 from sqlalchemy.orm import Session
 from fastapi import Depends
 from fastapi.responses import JSONResponse
 from dependencies import get_session
+from services import box_service
 
 box_router = APIRouter(prefix='/box', tags=['box'])
 
@@ -12,8 +12,8 @@ box_router = APIRouter(prefix='/box', tags=['box'])
                 description = "Return all surprise boxes registered in the system.",
                 status_code = status.HTTP_200_OK,
 )
-async def get_boxes(session: Session = Depends(get_session)):
-    boxes = session.query(Box).all()
+async def get_boxes():
+    boxes = box_service.get_boxes()
     return boxes
 
 @box_router.get("/{id}",
@@ -23,10 +23,9 @@ async def get_boxes(session: Session = Depends(get_session)):
 )
 async def get_box_by_id(id: int,
                         session: Session = Depends(get_session)):
-
-    box = session.query(Box).filter(Box.id==id).first()
-
-    if not box:
+    box = box_service.get_boxes(id)
+    
+    if box is None:
         return JSONResponse(
             status_code = status.HTTP_404_NOT_FOUND,
             content = {
@@ -44,13 +43,9 @@ async def get_box_by_id(id: int,
 async def add_box(name: str = Form(...),
                   description: str = Form(...),
                   image: str = Form(...),
-                  price: float = Form(...),
-                  session: Session = Depends(get_session)):
+                  price: float = Form(...)):
 
-    new_box = Box(name=name, description=description, image=image, price=price)
-    session.add(new_box)
-    session.commit()
-    session.refresh(new_box)
+    new_box = box_service.add_box(name, description, image, price)
 
     return JSONResponse(
         status_code = status.HTTP_201_CREATED,
