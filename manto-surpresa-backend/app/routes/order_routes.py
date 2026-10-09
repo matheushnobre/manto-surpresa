@@ -1,6 +1,9 @@
 from fastapi import APIRouter, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
+from sqlalchemy.orm import Session
+from dependencies import get_session
+from fastapi import Depends
 from schemas import OrderSchema
 from services import order_service
 
@@ -11,8 +14,8 @@ order_routes = APIRouter(prefix='/order', tags=['order'])
                 description = "Return all orders registered in the system.",
                 status_code = status.HTTP_200_OK,
 )
-async def get_orders():
-    orders = order_service.get_orders()
+async def get_orders(session: Session = Depends(get_session)):
+    orders = order_service.get_orders(session)
     return orders
 
 @order_routes.post("/create",
@@ -20,8 +23,8 @@ async def get_orders():
                 description = "Create a new order with client and product data.",
                 status_code = status.HTTP_201_CREATED,
 )
-async def create_order(order_data: OrderSchema):
-    new_order, payment = order_service.create_order(order_data)
+async def create_order(order_data: OrderSchema, session: Session = Depends(get_session)):
+    new_order, payment = order_service.create_order(order_data, session)
     
     return JSONResponse(
             status_code=status.HTTP_201_CREATED,

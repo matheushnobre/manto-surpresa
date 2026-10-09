@@ -21,9 +21,8 @@ async def get_boxes():
                 description = "Return a box with specific id.",
                 status_code = status.HTTP_200_OK,
 )
-async def get_box_by_id(id: int,
-                        session: Session = Depends(get_session)):
-    box = box_service.get_boxes(id)
+async def get_box_by_id(id: int, session: Session = Depends(get_session)):
+    box = box_service.get_boxes(id, session)
     
     if box is None:
         return JSONResponse(
@@ -43,9 +42,10 @@ async def get_box_by_id(id: int,
 async def add_box(name: str = Form(...),
                   description: str = Form(...),
                   image: str = Form(...),
-                  price: float = Form(...)):
+                  price: float = Form(...),
+                  session: Session = Depends(get_session)):
 
-    new_box = box_service.add_box(name, description, image, price)
+    new_box = box_service.add_box(name, description, image, price, session)
 
     return JSONResponse(
         status_code = status.HTTP_201_CREATED,

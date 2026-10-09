@@ -1,17 +1,15 @@
 from fastapi import HTTPException, status
 from models import Order, Client, Address, OrderItem, Box
 from sqlalchemy.orm import Session
-from fastapi import Depends
-from dependencies import get_session
 from schemas import OrderSchema
 from datetime import date
 from services.mercado_pago import create_pix_order
 
-def get_orders(session: Session = Depends(get_session)):
+def get_orders(session: Session):
     orders = session.query(Order).all()
     return orders
 
-def create_order(order_data: OrderSchema, session: Session = Depends(get_session)):
+def create_order(order_data: OrderSchema, session: Session):
     # Verify client
     client = session.query(Client).filter(Client.email==order_data.client.email).first()
     
