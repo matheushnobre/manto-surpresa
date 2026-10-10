@@ -10,12 +10,20 @@ MERCADO_PAGO_ACCESS_TOKEN = os.getenv("MERCADO_PAGO_ACCESS_TOKEN")
 
 BASE_URL = "https://api.mercadopago.com"
 
-def create_pix_order(order):
+
+def _headers(idempotent: bool = False):
     headers = {
         "Authorization": f"Bearer {MERCADO_PAGO_ACCESS_TOKEN}",
         "Content-Type": "application/json",
-        "X-Idempotency-Key": str(uuid.uuid4())
     }
+
+    if idempotent:
+        headers["X-Idempotency-Key"] = str(uuid.uuid4())
+
+    return headers
+
+def create_pix_order(order):
+    headers = _headers(idempotent=True)
 
     data = {
         "type": "online",
@@ -48,4 +56,22 @@ def create_pix_order(order):
 
     response.raise_for_status()
 
+    return response.json()
+
+
+def get_order(order_id: str):
+    response = requests.get(
+        f"{BASE_URL}/v1/orders/{order_id}",
+        headers=_headers()
+    )
+    response.raise_for_status()
+    return response.json()
+
+
+def get_payment(payment_id: str):
+    response = requests.get(
+        f"{BASE_URL}/v1/payments/{payment_id}",
+        headers=_headers()
+    )
+    response.raise_for_status()
     return response.json()
