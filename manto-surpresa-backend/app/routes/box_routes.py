@@ -12,8 +12,8 @@ box_router = APIRouter(prefix='/box', tags=['box'])
                 description = "Return all surprise boxes registered in the system.",
                 status_code = status.HTTP_200_OK,
 )
-async def get_boxes():
-    boxes = box_service.get_boxes()
+async def get_boxes(session: Session = Depends(get_session)):
+    boxes = box_service.get_box(session)
     return boxes
 
 @box_router.get("/{id}",
@@ -22,7 +22,7 @@ async def get_boxes():
                 status_code = status.HTTP_200_OK,
 )
 async def get_box_by_id(id: int, session: Session = Depends(get_session)):
-    box = box_service.get_boxes(id, session)
+    box = box_service.get_box_by_id(id, session)
     
     if box is None:
         return JSONResponse(
