@@ -13,7 +13,7 @@ box_router = APIRouter(prefix='/box', tags=['box'])
                 status_code = status.HTTP_200_OK,
 )
 async def get_boxes(session: Session = Depends(get_session)):
-    boxes = box_service.get_box(session)
+    boxes = box_service.get_boxes(session)
     return boxes
 
 @box_router.get("/{id}",
