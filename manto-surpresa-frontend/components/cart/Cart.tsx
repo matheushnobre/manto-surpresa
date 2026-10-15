@@ -44,7 +44,7 @@ export default function CartComponent({ open, onClose }: CartComponentProps) {
 
         <div className="flex flex-1 flex-col ml-2 overflow-y-auto">
           {items.map((box: CartItem) => (
-            <CartItemComponent key={`${box.id}-${box.size}`} item={box} />
+            <CartItemComponent key={`${box.id}-${box.size}`} item={box} canEdit={true}/>
           ))}
         </div>
 

@@ -35,7 +35,7 @@ export default function Checkout() {
                 <h2 className="text-primary font-bold text-2xl mb-4">Seu Pedido</h2>
                 <div className="flex flex-col gap-3">
                     {items.map((box: CartItem) => (
-                    <CartItemComponent key={`${box.id}-${box.size}`} item={box} />
+                    <CartItemComponent key={`${box.id}-${box.size}`} item={box} canEdit={paymentQrCode == ""} />
                     ))}
                 </div>
 

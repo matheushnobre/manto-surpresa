@@ -6,9 +6,10 @@ import { Button } from "@/components//ui/button";
 
 interface CartItemComponentProps {
   item: CartItem;
+  canEdit: boolean;
 }
 
-export default function CartItemComponent({ item }: CartItemComponentProps) {
+export default function CartItemComponent({ item, canEdit }: CartItemComponentProps) {
   const changeQuantity = userCartStore((state) => state.changeQuantity);
   const removeItem = userCartStore((state) => state.removeItem);
 
@@ -36,6 +37,7 @@ export default function CartItemComponent({ item }: CartItemComponentProps) {
           <Button
             className="h-7 w-7 bg-[#F8F8F8] border-2 shadow-[2px_2px_0px_#0E2357] cursor-pointer items-center justify-center"
             onClick={() => changeQuantity(item, -1)}
+            disabled={!canEdit}
           >
             −
           </Button>
@@ -45,6 +47,7 @@ export default function CartItemComponent({ item }: CartItemComponentProps) {
           <Button
             className="h-7 w-7 border-2 shadow-[2px_2px_0px_#0E2357] cursor-pointer items-center justify-center"
             onClick={() => changeQuantity(item, 1)}
+            disabled={!canEdit}
           >
             +
           </Button>
@@ -53,6 +56,7 @@ export default function CartItemComponent({ item }: CartItemComponentProps) {
             <Button
               className="p-3 bg-[#9C2007] border-3 border-black shadow-[3px_3px_0px_#180501] hover:shadow-[2px_2px_0px_#180501]"
               onClick={() => removeItem(item)}
+              disabled={!canEdit}
             >
               <Trash className="text-gray-200"/>
             </Button>
