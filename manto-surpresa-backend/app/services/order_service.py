@@ -5,6 +5,7 @@ from schemas import OrderSchema
 from datetime import date
 from requests import HTTPError
 from services.mercado_pago import create_pix_order, get_order, get_payment
+from services.email_service import send_email_when_create_order, send_email_when_confirmed_order
 
 MP_ORDER_STATUS = {
     "processed": "Pago",
@@ -101,6 +102,9 @@ def create_order(order_data: OrderSchema, session: Session):
     # 7. Save Mercado Pago data in order
     new_order.mercado_pago_order_id = pix["id"]
     new_order.mercado_pago_payment_id = payment["id"]
+
+    # Send email to confirm order
+    send_email_when_create_order(new_order, payment)
     
     session.commit()
 
@@ -164,6 +168,9 @@ def _update_order_from_mp_order(mp_order_id: str, session: Session, payload: dic
     api_status = (mp_order or {}).get("status")
     notification_status = notification.get("status")
     order.status = _resolve_status(MP_ORDER_STATUS, api_status, notification_status, order.status)
+    if order.status == 'Pago':
+        send_email_when_confirmed_order(order)
+
     session.commit()
 
     return {
@@ -194,6 +201,9 @@ def _update_order_from_payment(payment_id: str, session: Session, payload: dict)
     api_status = (payment or {}).get("status")
     notification_status = notification.get("status")
     order.status = _resolve_status(MP_PAYMENT_STATUS, api_status, notification_status, order.status)
+    if order.status == 'Pago':
+        send_email_when_confirmed_order(order)
+
     session.commit()
 
     return {
