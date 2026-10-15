@@ -12,7 +12,6 @@ export default async function PageHome() {
 
   return (
     <main className="min-w-0">
-      
       <div className="flex w-full md:min-h-[calc(100vh-4rem)]">
         <div className="relative hidden lg:block lg:w-[70%] ">
           <video
