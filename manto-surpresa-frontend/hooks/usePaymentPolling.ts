@@ -26,7 +26,7 @@ export function usePaymentPolling({
 
   // Refs para controle do ciclo de vida e evitar concorrência
   const inFlightRef = useRef<boolean>(false);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
   const isMountedRef = useRef<boolean>(true);
   const onPaymentApprovedRef = useRef(onPaymentApproved);
@@ -35,11 +35,12 @@ export function usePaymentPolling({
     onPaymentApprovedRef.current = onPaymentApproved;
   }, [onPaymentApproved]);
 
-  useEffect(() => {
-    if (initialStatus) {
-      setStatus(initialStatus);
-    }
-  }, [initialStatus]);
+  // Sincroniza status se initialStatus mudar, sem disparar setState em useEffect
+  const [prevInitialStatus, setPrevInitialStatus] = useState(initialStatus);
+  if (prevInitialStatus !== initialStatus) {
+    setPrevInitialStatus(initialStatus);
+    setStatus(initialStatus);
+  }
 
   const checkStatus = useCallback(async () => {
     // Evita requisição se já houver uma em andamento ou se o componente foi desmontado
@@ -74,9 +75,9 @@ export function usePaymentPolling({
           return true;
         }
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Ignora abortos normais ao desmontar componente
-      if (error?.name === "AbortError") {
+      if (error instanceof Error && error.name === "AbortError") {
         return false;
       }
       // Trata falhas temporárias de comunicação sem interromper definitivamente o monitoramento
