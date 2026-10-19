@@ -217,7 +217,7 @@ export default function FormCheckout({
             
             {paymentQrCode === "" && (
                 <div className="flex justify-center">
-                    <Button type="submit" className="w-full md:w-[50%] py-5 text-md">
+                    <Button type="submit" className="w-full md:w-[50%] py-5 text-md" disabled={items.length===0}>
                         Gerar PIX para Pagamento
                     </Button>
                 </div>
