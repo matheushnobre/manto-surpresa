@@ -8,17 +8,19 @@ import { getAdress } from "@/services/viacepService";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckoutFormSchema, checkoutFormSchema } from "../utils/zodSchema";
-import { createOrder } from "@/services/checkoutService";
+import { createOrder, CreateOrderResponse } from "@/services/checkoutService";
 import { userCartStore } from "@/stores/userCartStore";
 
 interface FormCheckoutProps {
     paymentQrCode: string;
     setPaymentQrCode: (qrCode: string) => void;
+    onOrderCreated?: (order: CreateOrderResponse) => void;
 }
 
 export default function FormCheckout({
     paymentQrCode,
-    setPaymentQrCode
+    setPaymentQrCode,
+    onOrderCreated
 }: FormCheckoutProps) {  
     const { items } = userCartStore();    
     const [addressLoaded, setAddressLoaded] = useState(false);
@@ -71,6 +73,7 @@ export default function FormCheckout({
             })
 
             setPaymentQrCode(response.pix.qr_code_base64);
+            onOrderCreated?.(response);
         } catch (error) {
             console.log("Erro ao criar pedido", error);
         }
