@@ -56,3 +56,32 @@ export async function createOrder(data: CreateOrderRequest): Promise<CreateOrder
 
   return response.json();
 }
+
+export interface OrderStatusResponse {
+  id: number;
+  order_id?: number;
+  status: string;
+}
+
+export async function getOrderStatus(
+  orderId: number,
+  signal?: AbortSignal
+): Promise<OrderStatusResponse> {
+  const response = await fetch(`${API_URL}/order/${orderId}/status`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    signal,
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => null);
+
+    throw new Error(
+      error?.detail || `Failed to fetch status for order ${orderId}`
+    );
+  }
+
+  return response.json();
+}

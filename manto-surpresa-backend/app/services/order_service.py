@@ -31,6 +31,51 @@ def get_orders(session: Session):
     orders = session.query(Order).all()
     return orders
 
+def get_order_status(order_id: int, session: Session):
+    order = session.query(Order).filter(Order.id == order_id).first()
+
+    if not order:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Order {order_id} not found."
+        )
+
+    if order.status == "Pendente":
+        if order.mercado_pago_payment_id:
+            try:
+                payment = _fetch_mp_resource(get_payment, order.mercado_pago_payment_id)
+                if payment:
+                    api_status = payment.get("status")
+                    if api_status in MP_PAYMENT_STATUS:
+                        new_status = MP_PAYMENT_STATUS[api_status]
+                        if new_status != order.status:
+                            order.status = new_status
+                            if order.status == "Pago":
+                                send_email_when_confirmed_order(order)
+                            session.commit()
+            except Exception:
+                pass
+        elif order.mercado_pago_order_id:
+            try:
+                mp_order = _fetch_mp_resource(get_order, order.mercado_pago_order_id)
+                if mp_order:
+                    payments = ((mp_order or {}).get("transactions") or {}).get("payments") or []
+                    if payments and not order.mercado_pago_payment_id:
+                        order.mercado_pago_payment_id = payments[0].get("id")
+
+                    api_status = mp_order.get("status")
+                    if api_status in MP_ORDER_STATUS:
+                        new_status = MP_ORDER_STATUS[api_status]
+                        if new_status != order.status:
+                            order.status = new_status
+                            if order.status == "Pago":
+                                send_email_when_confirmed_order(order)
+                            session.commit()
+            except Exception:
+                pass
+
+    return order
+
 def create_order(order_data: OrderSchema, session: Session):
     # Verify client
     client = session.query(Client).filter(Client.email==order_data.client.email).first()
