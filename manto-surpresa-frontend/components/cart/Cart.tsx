@@ -60,9 +60,12 @@ export default function CartComponent({ open, onClose }: CartComponentProps) {
           </div>
 
           <Link
-            href="/checkout"
+            href={items.length === 0 ? "#" : "/checkout"}
+            aria-disabled={items.length === 0}
+            tabIndex={items.length === 0 ? -1 : undefined}
+            className={items.length === 0 ? "pointer-events-none" : ""}
             >
-            <Button className="w-full py-5" onClick={onClose}>
+            <Button className="w-full py-5" onClick={onClose} disabled={items.length===0}>
               Finalizar Compra
             </Button>
           </Link>
