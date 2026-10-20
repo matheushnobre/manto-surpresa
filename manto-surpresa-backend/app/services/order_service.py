@@ -1,11 +1,11 @@
 from fastapi import HTTPException, status
-from models import Order, Client, Address, OrderItem, Box
+from app.models import Order, Client, Address, OrderItem, Box
 from sqlalchemy.orm import Session
-from schemas import OrderSchema
+from app.schemas import OrderSchema
 from datetime import date
 from requests import HTTPError
-from services.mercado_pago import create_pix_order, get_order, get_payment
-from services.email_service import send_email_when_create_order, send_email_when_confirmed_order
+from app.services.mercado_pago import create_pix_order, get_order, get_payment
+from app.services.email_service import send_email_when_create_order, send_email_when_confirmed_order
 
 MP_ORDER_STATUS = {
     "processed": "Pago",

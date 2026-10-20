@@ -2,8 +2,8 @@ from fastapi import APIRouter, status, Form
 from sqlalchemy.orm import Session
 from fastapi import Depends
 from fastapi.responses import JSONResponse
-from dependencies import get_session
-from services import box_service
+from app.dependencies import get_session
+from app.services import box_service
 
 box_router = APIRouter(prefix='/box', tags=['box'])
 

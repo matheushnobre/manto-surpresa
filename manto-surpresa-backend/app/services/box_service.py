@@ -1,4 +1,4 @@
-from models import Box
+from app.models import Box
 from sqlalchemy.orm import Session
 
 def get_boxes(session: Session):

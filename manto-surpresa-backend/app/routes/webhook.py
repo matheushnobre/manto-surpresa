@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
-from dependencies import get_session
-from services import order_service
+from app.dependencies import get_session
+from app.services import order_service
 
 webhook_router = APIRouter(prefix='/webhook', tags=['webhook'])
 

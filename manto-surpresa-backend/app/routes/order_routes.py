@@ -2,10 +2,10 @@ from fastapi import APIRouter, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
-from dependencies import get_session
+from app.dependencies import get_session
 from fastapi import Depends
-from schemas import OrderSchema
-from services import order_service
+from app.schemas import OrderSchema
+from app.services import order_service
 
 order_routes = APIRouter(prefix='/order', tags=['order'])
 
