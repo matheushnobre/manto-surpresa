@@ -12,7 +12,7 @@ export default async function PageHome() {
 
   return (
     <main className="min-w-0">
-      <div className="flex w-full md:min-h-[calc(100vh-4rem)]">
+      <div className="flex w-full min-h-[calc(100vh-4rem)]">
         <div className="relative hidden lg:block lg:w-[70%] ">
           <video
             autoPlay
@@ -33,7 +33,7 @@ export default async function PageHome() {
                 <CarouselItem key={box.id} className="flex items-center justify-center mt-4">
                   <CardBox
                     id={box.id}
-                    image={`/assets${box.image}`}
+                    image={`/assets/boxes/${box.image}`}
                     name={box.name}
                     description={box.description}
                     price={box.price}

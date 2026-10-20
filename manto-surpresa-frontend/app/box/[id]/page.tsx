@@ -15,14 +15,14 @@ export default async function BoxPage({ params }: PageProps) {
   const box = await getBoxById(id);
 
   return (
-    <main className="w-full px-8 py-8">
+    <main className="w-full px-8 py-8 mb-8">
       <div className="mx-auto max-w-4xl">
         <h1 className="text-3xl font-bold text-primary">{box.name}</h1>
 
         <section className="grid mt-4 gap-4 md:grid-cols-[350px_1fr] md:gap-12">
           <div className="flex flex-col gap-4 items-center">
             <Image
-              src={box.image}
+              src={`/assets/boxes/${box.image}`}
               alt={box.name}
               width={350}
               height={350}
