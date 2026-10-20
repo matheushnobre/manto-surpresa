@@ -1,3 +1,4 @@
+from fastapi.encoders import jsonable_encoder
 from fastapi import APIRouter, status, Form
 from sqlalchemy.orm import Session
 from fastapi import Depends
@@ -49,12 +50,12 @@ async def add_box(name: str = Form(...),
 
     return JSONResponse(
         status_code = status.HTTP_201_CREATED,
-        content = {
+        content=jsonable_encoder({
             "id": new_box.id,
             "name": new_box.name,
             "image": new_box.image,
             "description": new_box.description,
             "price": new_box.price,
             "message": "Box successfully added"
-        }
+        })
     )
