@@ -18,6 +18,9 @@ Mako==1.4.1
 MarkupSafe==3.0.3
 mercadopago==3.6.0
 passlib==1.7.4
+psycopg==3.3.6
+psycopg-binary==3.3.6
+psycopg2-binary==2.9.13
 pyasn1==0.6.4
 pycparser==3.0
 pydantic==2.13.5
@@ -32,5 +35,6 @@ SQLAlchemy==2.0.53
 starlette==1.6.0
 typing-inspection==0.4.4
 typing_extensions==4.16.0
+tzdata==2026.5
 urllib3==2.8.0
 uvicorn==0.53.0
