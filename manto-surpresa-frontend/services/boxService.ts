@@ -4,7 +4,6 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function getBoxes(): Promise<Box[]> {
   const response = await fetch(`${API_URL}/box`, {
-    next: { revalidate: 3600 },
   });
 
   if (!response.ok) {
@@ -16,7 +15,6 @@ export async function getBoxes(): Promise<Box[]> {
 
 export async function getBoxById(id: number): Promise<Box> {
   const response = await fetch(`${API_URL}/box/${id}`, {
-    next: { revalidate: 3600 },
   });
 
   if (!response.ok) {
