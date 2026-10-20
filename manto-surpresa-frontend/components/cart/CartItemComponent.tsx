@@ -17,7 +17,7 @@ export default function CartItemComponent({ item, canEdit }: CartItemComponentPr
     <div className="flex w-full h-42 gap-4 bg-white px-2 py-4 pr-4 border-b border-gray-200">
       <div className="mt-1 relative h-20 w-20 shrink-0 overflow-hidden rounded-lg">
         <Image
-          src={`/assets${item.image}`}
+          src={`/assets/boxes/${item.image}`}
           alt={item.name}
           fill
           className="border border-gray-600 rounded-lg"
