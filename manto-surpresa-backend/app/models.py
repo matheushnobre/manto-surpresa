@@ -6,7 +6,10 @@ from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 load_dotenv()
 
-DATABASE_URL = os.getenv("STORAGE_DATABASE_URL_UNPOOLED")
+DATABASE_URL = (
+    os.getenv("STORAGE_DATABASE_URL_UNPOOLED")
+    or os.getenv("STORAGE_DATABASE_URL")
+)
 
 if not DATABASE_URL:
     raise RuntimeError("DATABASE_URL não configurada")
