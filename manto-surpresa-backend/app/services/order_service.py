@@ -31,6 +31,15 @@ def get_orders(session: Session):
     orders = session.query(Order).all()
     return orders
 
+def get_orders_by_client_email(email: str, session: Session):
+    return (
+        session.query(Order)
+        .join(Client)
+        .filter(Client.email == email)
+        .order_by(Order.date.desc(), Order.id.desc())
+        .all()
+    )
+
 def get_order_status(order_id: int, session: Session):
     order = session.query(Order).filter(Order.id == order_id).first()
 
@@ -285,5 +294,3 @@ def _find_order_by_mp_data(
         return session.query(Order).filter(Order.id == int(external_reference)).first()
 
     return None
-
-    
