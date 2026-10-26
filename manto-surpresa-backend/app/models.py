@@ -1,4 +1,5 @@
-from sqlalchemy import create_engine, Column, String, Integer, Numeric, Date, ForeignKey
+from sqlalchemy import create_engine, Column, String, Integer, Numeric, Date, ForeignKey, Boolean, DateTime
+from datetime import datetime
 from sqlalchemy.orm import declarative_base, relationship
 from decimal import Decimal
 import os
@@ -134,3 +135,13 @@ class OrderItem(Base):
         self.quantity = quantity
         self.size = size
         self.unit_price = box.price
+
+class OTPCode(Base):
+    __tablename__ = "otp_codes"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    email = Column(String, nullable=False)
+    code_hash = Column(String, nullable=False)
+    expires_at = Column(DateTime, nullable=False)
+    used = Column(Boolean, default=False, nullable=False)
+    created_at = Column(DateTime, default=datetime.now, nullable=False)

@@ -14,7 +14,9 @@ app.add_middleware(
 from app.routes.box_routes import box_router
 from app.routes.order_routes import order_routes
 from app.routes.webhook import webhook_router
+from app.routes.otp_router import otp_router
 
 app.include_router(box_router)
 app.include_router(order_routes)
 app.include_router(webhook_router)
+app.include_router(otp_router)
