@@ -22,7 +22,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="pt-Br" className={cn("font-sans", geist.variable)}>
-      <body className={`${fredoka.className} flex min-h-screen flex-col`}>        <Header />
+      <body className={`${fredoka.className} flex min-h-screen flex-col`}>        
+        <Header />
         <main className="flex-1">
           {children}
         </main>

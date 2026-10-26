@@ -61,3 +61,8 @@ def send_email(subject, body, recipient):
 
     server.send_message(message)
     server.quit()
+
+def send_otp_email(email, code):
+    subject = 'Código de verificação - Manto Surpresa'
+    body = f'Seu código de verificação para acesso ao sistema é {code}. Se você não solicitou um código, ignore esta mensagem.'
+    send_email(subject, body, email)
