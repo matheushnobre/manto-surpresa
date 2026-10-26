@@ -30,12 +30,12 @@ def upgrade() -> None:
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
-    #op.alter_column('boxes', 'price',
-               #existing_type=sa.FLOAT(),
-               #type_=sa.Numeric(precision=10, scale=2),
-               #existing_nullable=False)
-    #op.add_column('orders', sa.Column('mercado_pago_order_id', sa.String(), nullable=True))
-    #op.add_column('orders', sa.Column('mercado_pago_payment_id', sa.String(), nullable=True))
+    op.alter_column('boxes', 'price',
+               existing_type=sa.FLOAT(),
+               type_=sa.Numeric(precision=10, scale=2),
+               existing_nullable=False)
+    op.add_column('orders', sa.Column('mercado_pago_order_id', sa.String(), nullable=True))
+    op.add_column('orders', sa.Column('mercado_pago_payment_id', sa.String(), nullable=True))
     # ### end Alembic commands ###
 
 
