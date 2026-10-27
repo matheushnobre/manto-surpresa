@@ -29,7 +29,7 @@ export default function Header() {
 
           {/* Desktop */}
           <nav className="hidden md:flex gap-8">
-            <Link
+            {/* <Link
               href="/boxes"
               className="text-white px-2 py-1 text-primary transition-all hover:-translate-y-[-2px] active:translate-x-[-2px] active:translate-y-[2px] active:shadow-none hover:text-secondary"
             >
@@ -41,7 +41,7 @@ export default function Header() {
               className="text-white px-2 py-1 text-primary transition-all hover:-translate-y-[-2px] active:translate-x-[-2px] active:translate-y-[2px] active:shadow-none hover:text-secondary"
             >
               Entre em contato
-            </Link>
+            </Link> */}
 
             <Link
               href="/tracking"
@@ -88,14 +88,14 @@ export default function Header() {
               <Link href="/" className="text-white px-2 text-primary transition-all hover:-translate-y-[-2px] active:translate-x-[-2px] active:translate-y-[2px] active:shadow-none hover:text-secondary">
                 Início
               </Link>
-
+{/* 
               <Link href="/boxes" className="text-white px-2 text-primary transition-all hover:-translate-y-[-2px] active:translate-x-[-2px] active:translate-y-[2px] active:shadow-none hover:text-secondary">
                 Caixas misteriosas
               </Link>
 
               <Link href="/contact" className="text-white px-2 text-primary transition-all hover:-translate-y-[-2px] active:translate-x-[-2px] active:translate-y-[2px] active:shadow-none hover:text-secondary">
                 Entre em contato
-              </Link>
+              </Link> */}
 
               <Link
                 href="/tracking"
