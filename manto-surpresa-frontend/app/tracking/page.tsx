@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/authStore";
 import { getMyOrders, MyOrder } from "@/services/orderService";
 import { Button } from "@/components/ui/button";
 import { Package, LogOut, Loader2, AlertCircle } from "lucide-react";
-import { redirect } from "next/navigation";
 
 function getStoredToken(): string | null {
   if (typeof window === "undefined") return null;
@@ -33,6 +33,7 @@ function getStoredToken(): string | null {
 }
 
 export default function Tracking() {
+  const router = useRouter();
   const token = useAuthStore((state) => state.token);
   const email = useAuthStore((state) => state.email);
   const logout = useAuthStore((state) => state.logout);
@@ -40,21 +41,14 @@ export default function Tracking() {
   const [orders, setOrders] = useState<MyOrder[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-
     // Obtém o token considerando Zustand, cookies ou localStorage sincronamente
     const activeToken = token || getStoredToken();
 
     // Se realmente não houver token em lugar nenhum, redireciona para a verificação
     if (!activeToken) {
-      redirect("/code_verification?redirect=/tracking");
+      router.replace("/code_verification?redirect=/tracking");
       return;
     }
 
@@ -77,7 +71,7 @@ export default function Tracking() {
             err.message.includes("expirada")
           ) {
             logout();
-            redirect("/code_verification?redirect=/tracking");
+            router.replace("/code_verification?redirect=/tracking");
           }
         } else {
           setError("Não foi possível carregar seus pedidos.");
@@ -88,19 +82,18 @@ export default function Tracking() {
     }
 
     fetchOrders(activeToken);
-  }, [mounted, token, logout]);
+  }, [token, logout, router]);
 
   const handleLogout = () => {
     logout();
-    redirect("/code_verification?redirect=/tracking");
+    router.replace("/code_verification");
   };
 
-  // Enquanto o componente monta e checa a autenticação
-  if (!mounted) {
+  if (loading && orders.length === 0 && !error) {
     return (
       <main className="flex min-h-[60vh] flex-col items-center justify-center px-4 py-12 text-center">
         <Loader2 className="h-8 w-8 animate-spin text-primary mb-3" />
-        <p className="text-sm text-gray-500">Verificando autenticação...</p>
+        <p className="text-sm text-gray-500">Carregando seus pedidos...</p>
       </main>
     );
   }
@@ -187,7 +180,7 @@ export default function Tracking() {
                       <div className="flex items-center gap-2">
                         <Package className="h-4 w-4 text-primary" />
                         <span>
-                          {item.box_name} - Tamanho: <strong>{item.size}</strong> (x{item.quantity})
+                          {item.box_name || `Caixa #${item.box_id}`} - Tamanho: <strong>{item.size}</strong> (x{item.quantity})
                         </span>
                       </div>
                       <span className="font-medium text-gray-700">
