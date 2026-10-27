@@ -10,20 +10,25 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckoutFormSchema, checkoutFormSchema } from "../utils/zodSchema";
 import { createOrder, CreateOrderResponse } from "@/services/checkoutService";
 import { userCartStore } from "@/stores/userCartStore";
+import { Loader2 } from "lucide-react";
 
 interface FormCheckoutProps {
     paymentQrCode: string;
     setPaymentQrCode: (qrCode: string) => void;
+    setPixCode?: (qrCodeText: string) => void;
     onOrderCreated?: (order: CreateOrderResponse) => void;
 }
 
 export default function FormCheckout({
     paymentQrCode,
     setPaymentQrCode,
+    setPixCode,
     onOrderCreated
 }: FormCheckoutProps) {  
     const { items } = userCartStore();    
     const [addressLoaded, setAddressLoaded] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const {
         register, 
@@ -47,7 +52,10 @@ export default function FormCheckout({
     });
 
     async function onSubmit(payload: CheckoutFormSchema) {
-        if (items.length === 0) return;
+        if (items.length === 0 || isLoading) return;
+
+        setIsLoading(true);
+        setErrorMessage("");
 
         try {
             const response = await createOrder({
@@ -70,12 +78,20 @@ export default function FormCheckout({
                     quantity: item.quantity,
                     size: item.size,
                 })),
-            })
+            });
 
             setPaymentQrCode(response.pix.qr_code_base64);
+            setPixCode?.(response.pix.qr_code);
             onOrderCreated?.(response);
         } catch (error) {
-            console.log("Erro ao criar pedido", error);
+            console.error("Erro ao criar pedido:", error);
+            if (error instanceof Error) {
+                setErrorMessage(error.message);
+            } else {
+                setErrorMessage("Ocorreu um erro ao gerar o pagamento. Tente novamente.");
+            }
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -112,7 +128,7 @@ export default function FormCheckout({
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
             {/* Seção de contato */}
-            <fieldset className="border-2 border-primary/30 px-5 pb-6 pt-4 rounded-lg" disabled={paymentQrCode !== ""}>
+            <fieldset className="border-2 border-primary/30 px-5 pb-6 pt-4 rounded-lg" disabled={paymentQrCode !== "" || isLoading}>
                 <legend className="px-3 text-2xl font-bold text-primary">
                     Contato
                 </legend>
@@ -145,7 +161,7 @@ export default function FormCheckout({
             </fieldset>
 
             {/* Seção de endereço de entrega */}
-            <fieldset className="border-2 border-primary/30 px-5 pb-6 pt-4 rounded-lg" disabled={paymentQrCode !== ""}>
+            <fieldset className="border-2 border-primary/30 px-5 pb-6 pt-4 rounded-lg" disabled={paymentQrCode !== "" || isLoading}>
                 <legend className="px-3 text-2xl font-bold text-primary">
                     Dados de Entrega
                 </legend>
@@ -216,10 +232,43 @@ export default function FormCheckout({
             </fieldset>
             
             {paymentQrCode === "" && (
-                <div className="flex justify-center">
-                    <Button type="submit" className="w-full md:w-[50%] py-5 text-md" disabled={items.length===0}>
-                        Gerar PIX para Pagamento
+                <div className="flex flex-col items-center gap-4">
+                    <Button 
+                        type="submit" 
+                        className="w-full md:w-[50%] py-5 text-md cursor-pointer" 
+                        disabled={items.length === 0 || isLoading}
+                    >
+                        {isLoading ? (
+                            <span className="flex items-center gap-2">
+                                <Loader2 className="h-5 w-5 animate-spin" />
+                                Criando pedido...
+                            </span>
+                        ) : (
+                            "Gerar PIX para Pagamento"
+                        )}
                     </Button>
+
+                    {isLoading && (
+                        <div className="flex items-center gap-3 w-full md:w-[70%] rounded-xl border border-blue-100 bg-[#CDEBFD]/50 p-4 text-[#0E2357] animate-pulse">
+                            <Loader2 className="h-5 w-5 shrink-0 animate-spin text-primary" />
+                            <div className="text-left">
+                                <p className="font-semibold text-sm sm:text-base">
+                                    Seu pedido está sendo criado...
+                                </p>
+                                <p className="text-xs sm:text-sm text-gray-700 mt-0.5">
+                                    O QR Code Pix pode levar alguns instantes para ser gerado. Por favor, aguarde.
+                                </p>
+                            </div>
+                        </div>
+                    )}
+
+                    {errorMessage && (
+                        <div className="w-full flex items-center justify-center">
+                            <p role="alert" className="text-sm text-red-500 font-medium">
+                                {errorMessage}
+                            </p>
+                        </div>
+                    )}
                 </div>
             )}
             

@@ -11,6 +11,7 @@ import { CreateOrderResponse } from "@/services/checkoutService";
 
 export default function Checkout() {
     const [paymentQrCode, setPaymentQrCode] = useState("");
+    const [pixCode, setPixCode] = useState("");
     const [orderId, setOrderId] = useState<number | null>(null);
     const [purchasedItems, setPurchasedItems] = useState<CartItem[]>([]);
     
@@ -26,6 +27,7 @@ export default function Checkout() {
     function handleOrderCreated(order: CreateOrderResponse) {
         setOrderId(order.id);
         setPaymentQrCode(order.pix.qr_code_base64);
+        setPixCode(order.pix.qr_code);
         setPurchasedItems([...items]);
         clearCart();
     }
@@ -42,12 +44,14 @@ export default function Checkout() {
                 <FormCheckout 
                     paymentQrCode={paymentQrCode}
                     setPaymentQrCode={setPaymentQrCode}
+                    setPixCode={setPixCode}
                     onOrderCreated={handleOrderCreated}
                 />
 
                 {paymentQrCode && (
                     <PaymentPix
                         qrCodeBase64={paymentQrCode}
+                        qrCodeText={pixCode}
                         orderId={orderId}
                         status={status}
                         isChecking={isChecking}
