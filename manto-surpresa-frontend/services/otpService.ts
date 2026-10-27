@@ -1,5 +1,11 @@
-
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+export interface VerifyOtpResponse {
+  message: string;
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+}
 
 export async function sendEmail(email: string): Promise<void> {
   const response = await fetch(`${API_URL}/otp`, {
@@ -15,7 +21,10 @@ export async function sendEmail(email: string): Promise<void> {
   }
 }
 
-export async function verifyCode(email: string, code: string): Promise<void> {
+export async function verifyCode(
+  email: string,
+  code: string
+): Promise<VerifyOtpResponse> {
   const response = await fetch(`${API_URL}/otp/verify`, {
     method: "POST",
     headers: {
@@ -43,4 +52,6 @@ export async function verifyCode(email: string, code: string): Promise<void> {
 
     throw new Error(message);
   }
+
+  return response.json();
 }

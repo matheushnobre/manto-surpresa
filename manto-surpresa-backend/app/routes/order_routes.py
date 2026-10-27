@@ -33,6 +33,7 @@ async def get_my_orders(
                 "items": [
                     {
                         "box_id": item.box_id,
+                        "box_name": item.box.name,
                         "quantity": item.quantity,
                         "size": item.size,
                         "unit_price": item.unit_price,
