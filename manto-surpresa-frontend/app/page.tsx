@@ -4,6 +4,7 @@ import { Box } from "../types/box";
 import CardSteps from "../components/cardSteps/CardSteps";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
+import { ScrollToTopButton } from "@/components/scroolToTopButton/ScrollToTopButton";
 
 export const dynamic = "force-dynamic";
 
@@ -93,11 +94,7 @@ export default async function PageHome() {
           </div>
 
           <div className="mt-8 w-full flex items-center justify-center">
-            <Button
-              className="bg-[#5CFF5C] px-8 py-6 text-md"
-            >
-              Quero ser Surpreendido!
-            </Button>
+            <ScrollToTopButton />
           </div>
         </div>
       </section>
