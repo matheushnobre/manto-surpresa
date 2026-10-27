@@ -1,6 +1,6 @@
 from fastapi import HTTPException, status
 from app.models import Order, Client, Address, OrderItem, Box
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 from app.schemas import OrderSchema
 from datetime import date
 from requests import HTTPError
@@ -36,6 +36,10 @@ def get_orders_by_client_email(email: str, session: Session):
         session.query(Order)
         .join(Client)
         .filter(Client.email == email)
+        .options(
+            selectinload(Order.items)
+            .selectinload(OrderItem.box)
+        )
         .order_by(Order.date.desc(), Order.id.desc())
         .all()
     )
